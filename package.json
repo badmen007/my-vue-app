@@ -2,7 +2,6 @@
   "name": "my-vue-app",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,7 +10,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "vue": "^3.2.45"
+    "element-plus": "^2.2.32",
+    "normalize.css": "^8.0.1",
+    "pinia": "^2.0.32",
+    "vue": "^3.2.45",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.53.0",
@@ -23,6 +26,8 @@
     "eslint-plugin-vue": "^9.9.0",
     "husky": "^8.0.3",
     "prettier": "^2.8.4",
-    "vite": "^4.1.0"
+    "sass": "^1.58.3",
+    "vite": "^4.1.0",
+    "vite-plugin-svg-icons": "^2.0.1"
   }
 }

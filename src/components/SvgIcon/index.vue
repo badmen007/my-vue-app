@@ -8,9 +8,8 @@
   <!-- Svg icon 通过名称使用 -->
   <svg
     v-else
-    class="svg-icon"
-    aria-hidden="true"
     :class="svgClass"
+    aria-hidden="true"
     v-bind="$attrs"
   >
   <!-- SVG中的use元素可以调用其他SVG文件的元素，<use xlink:href="#symbolId">
@@ -26,7 +25,7 @@ const props = defineProps<{iconClass: string; className?: string}>()
 // 是否带协议的图片链接
 const isExt = computed(() => isExternal(props.iconClass || ''))
 // 拼接成symbolId在loader配置中指定了symbolId的格式 icon-图标名称
-const iconName = computed(() => `icon-${props.iconClass}`)
+const iconName = computed(() => `#icon-${props.iconClass}`)
 // 添加类名 props.className外部传入的自定义类名
 const svgClass = computed(() => props.className ? `svg-icon ${props.className}` : 'svg-icon')
 

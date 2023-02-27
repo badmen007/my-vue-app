@@ -8,7 +8,7 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: path.resovle(__dirname, 'src')
+        replacement: path.resolve(__dirname, 'src')
       }
     ]
   },
@@ -17,7 +17,8 @@ export default defineConfig({
     createSvgIconsPlugin({
       iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')], // icon存放的目录
       symbolId: 'icon-[name]', // 插入的位置
+      inject: 'body-last', // 插入的位置
       customDomId: '__svg__icons__dom__' // svg的id
     })
-  ],
+  ]
 })

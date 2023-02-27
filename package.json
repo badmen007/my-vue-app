@@ -7,16 +7,18 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --fix --ext .ts,.tsx,.vue src --quiet",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.config.js"
   },
   "dependencies": {
     "element-plus": "^2.2.32",
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.32",
     "vue": "^3.2.45",
-    "vue-router": "4"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/node": "^18.14.1",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "@vitejs/plugin-vue": "^4.0.0",
@@ -27,6 +29,7 @@
     "husky": "^8.0.3",
     "prettier": "^2.8.4",
     "sass": "^1.58.3",
+    "svgo": "^3.0.2",
     "vite": "^4.1.0",
     "vite-plugin-svg-icons": "^2.0.1"
   }

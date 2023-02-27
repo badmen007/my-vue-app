@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 const sayHi = () => {
-  console.log('hi') 
+  alert('hi')
 }
 </script>
 

@@ -13,7 +13,8 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/documentation/index.vue'),
         meta: {
           title: 'Documentation',
-          icon: 'documentation'
+          icon: 'documentation',
+          hidden: true
         }
       }
     ]

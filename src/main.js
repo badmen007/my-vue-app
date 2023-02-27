@@ -15,10 +15,12 @@ import "element-plus/dist/index.css";
 
 import router from './router'
 
-
-
+// 注册element-plus
+import installElementPlus from './plugins/element'
 const app = createApp(App)
 app.use(createPinia())
+// 安装element-plus
+app.use(installElementPlus)
 app.use(ElementPlus)
 // 使用icon组件
 app.use(initSvgIcon)

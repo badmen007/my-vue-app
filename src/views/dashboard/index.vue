@@ -3,13 +3,19 @@
     <h1>Dashboard page</h1>
     <svg-icon icon-class="bug" />
     <svg-icon icon-class="404" class-name="custom-class" @click="sayHi"/>
+    <br />
+    <br />
+    <br />
+    <el-button type="primary">按钮</el-button>
   </div>
 </template>
 
 
 <script setup lang="ts">
+// import { getCurrentInstance } from 'vue'
+const { proxy } = getCurrentInstance()!
 const sayHi = () => {
-  alert('hi')
+  proxy?.$message.success('Hi')
 }
 </script>
 

@@ -10,15 +10,23 @@
     :collapse="isCollapse"
     :collapse-transition="true"
   >
-    <sidebar-item></sidebar-item>
+    <sidebar-item
+      v-for="route in menuRoutes"
+      :key="route.path"
+      :item="route"
+      :base-path="route.path"
+    />
   </el-menu>
 </template>
 <script lang="ts" setup>
 import scssVariables from '@/styles/variables.module.scss'
+import { routes } from '@/router'
 const route = useRoute()
 // 根据路由路径 对应 当前激活的菜单 页面刷新后 激活当前路由匹配的菜单
 const activeMenu = computed(() => {
   return route.path
 })
 const isCollapse = ref(false)
+
+const menuRoutes = computed(() => routes)
 </script>

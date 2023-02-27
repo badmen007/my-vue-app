@@ -68,6 +68,20 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         }
       }
     ]
+  },
+  {
+    path: '/external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'http:www.baidu.com',
+        redirect: '/',
+        meta: {
+          title: 'External Link',
+          icon: 'link'
+        }
+      }
+    ]
   }
 ]
 

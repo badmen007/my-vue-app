@@ -11,8 +11,14 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./components/Counter/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElSlider: typeof import('element-plus/es')['ElSlider']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./layout/components/Sidebar/index.vue')['default']
+    SidebarItem: typeof import('./layout/components/Sidebar/SidebarItem.vue')['default']
     SvgIcon: typeof import('./components/SvgIcon/index.vue')['default']
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-item-container" v-if="!item.meta || !item.meta.hidden">
     <!-- 如果有一个孩子，或者没孩子，或者有一个孩子但是被hidden了 -->
-    <template v-if="theOnlyOneChildRoute && (!theOnlyOneChildRoute.children || theOnlyOneChildRoute.noShowingChildren)">
+    <template v-if="theOnlyOneChildRoute && !alwaysShowRootMenu">
       <sidebar-item-link
         :to="resolvePath(theOnlyOneChildRoute.path)"
         v-if="theOnlyOneChildRoute.meta"
@@ -102,4 +102,5 @@ const icon = computed(() => {
 const resolvePath = (childPath: string) => {
   return path.resolve(props.basePath, childPath)
 }
+const alwaysShowRootMenu = computed(() => props.item.meta && props.item.meta.alwaysShow)
 </script>

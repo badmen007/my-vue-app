@@ -13,8 +13,8 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/documentation/index.vue'),
         meta: {
           title: 'Documentation',
-          icon: 'documentation',
-          hidden: true
+          icon: 'documentation'
+          // hidden: true
         }
       }
     ]
@@ -30,7 +30,8 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/guide/index.vue'),
         meta: {
           title: 'Guide',
-          icon: 'guide'
+          icon: 'guide',
+          activeMenu: '/guide/index'
         }
       }
     ]

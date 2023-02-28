@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 
-import { useCounterStore } from '@/store/counter'
+import { useCounterStore } from '@/stores/app'
 const counter = useCounterStore()
 const handleClick = () => {
   counter.increment()

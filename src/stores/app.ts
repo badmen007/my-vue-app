@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { Size } from '@/plugins/element'
+
 export const useAppStore = defineStore(
   'app',
   () => {
@@ -7,20 +9,18 @@ export const useAppStore = defineStore(
       sidebar: {
         // sidebar 展开状态
         opened: true
-      }
+      },
+      size: 'default'
     })
     const sidebar = computed(() => state.sidebar)
+    const size = computed(() => state.size)
     // actions
     const toggleSidebar = () => {
       state.sidebar.opened = !state.sidebar.opened
     }
-    return { state, sidebar, toggleSidebar }
+    const setSize = (size: Size) => {
+      state.size = size
+    }
+    return { state, sidebar, toggleSidebar, size, setSize }
   }
-  // 持久化这里还是有问题的
-  // {
-  //   persist: {
-  //     storage: window.sessionStorage,
-  //     paths: ['state.sidebar.opened']
-  //   }
-  // }
 )

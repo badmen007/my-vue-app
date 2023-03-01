@@ -15,7 +15,7 @@ export const useAppStore = defineStore(
       state.sidebar.opened = !state.sidebar.opened
     }
     return { state, sidebar, toggleSidebar }
-  },
+  }
   // 持久化这里还是有问题的
   // {
   //   persist: {

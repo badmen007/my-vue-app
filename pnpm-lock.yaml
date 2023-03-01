@@ -19,6 +19,7 @@ specifiers:
   pinia-plugin-persistedstate: ^3.1.0
   prettier: ^2.8.4
   sass: ^1.58.3
+  screenfull: ^6.0.2
   svgo: ^3.0.2
   unplugin-auto-import: ^0.15.0
   unplugin-element-plus: ^0.7.0
@@ -36,6 +37,7 @@ dependencies:
   path-to-regexp: 6.2.1
   pinia: 2.0.32_vue@3.2.47
   pinia-plugin-persistedstate: 3.1.0_pinia@2.0.32
+  screenfull: 6.0.2
   unplugin-element-plus: 0.7.0
   vue: 3.2.47
   vue-router: 4.1.6_vue@3.2.47
@@ -3227,6 +3229,11 @@ packages:
       immutable: 4.2.4
       source-map-js: 1.0.2
     dev: true
+
+  /screenfull/6.0.2:
+    resolution: {integrity: sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dev: false
 
   /scule/1.0.0:
     resolution: {integrity: sha512-4AsO/FrViE/iDNEPaAQlb77tf0csuq27EsVpy6ett584EcRTp6pTDLoGWVxCD77y5iU5FauOvhsI4o1APwPoSQ==}

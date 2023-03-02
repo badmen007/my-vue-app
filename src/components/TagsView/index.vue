@@ -4,7 +4,7 @@
       <!-- 一个个tag view就是router-link -->
       <router-link
         class="tags-view-item"
-        :class="'{active: isActive(tag)}'"
+        :class="{active: isActive(tag)}"
         v-for="(tag, index) in visitedViews"
         :key="index"
         :to="{path: tag.path, query: tag.query}"
@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import { useTagsView } from '@/stores/tagsView'
 import { storeToRefs } from 'pinia';
-import { RouteLocationNormalizedLoaded } from 'vue-router';
+import { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router';
 import { CloseBold } from '@element-plus/icons'
 
 const store = useTagsView();
@@ -54,6 +54,30 @@ const isActive = (tag: RouteLocationNormalizedLoaded) => {
 // 关闭当前右键的tag路由
 const closeSelectedTag = (view: RouteLocationNormalizedLoaded) => {
   store.delView(view)
+  // 如果移除的view是当前选中的状态view, 就让删除后的集合中最后一个tag view为选中的状态
+  if (isActive(view)) {
+    toLastView(visitedViews.value, view)
+  }
+}
+const router = useRouter()
+const toLastView = (
+  visitedViews: RouteLocationNormalized[],
+  view: RouteLocationNormalized
+) => {
+  // 得到集合中的最有一个项 tag view可能没有
+  const lastView = visitedViews[visitedViews.length - 1]
+  if (lastView) {
+    router.push(lastView.path)
+  } else {
+    // 如果集合中没有tag view
+    // 如果刚刚删除的正式Dashboard 就重定向到Dashboard(首页)
+    if (view.name === 'Dashboard') {
+      router.push({ path: view.path})
+    } else {
+      // tag都没有了 删除的也不是Dashboard 只能跳转到首页
+      router.push('/')
+    }
+  }
 }
 
 </script>

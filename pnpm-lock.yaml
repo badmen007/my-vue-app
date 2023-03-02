@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@element-plus/icons': ^0.0.11
+  '@element-plus/icons-vue': ^2.0.10
   '@types/node': ^18.14.1
   '@types/path-browserify': ^1.0.0
   '@typescript-eslint/eslint-plugin': ^5.53.0
@@ -30,6 +32,8 @@ specifiers:
   vue-router: ^4.1.6
 
 dependencies:
+  '@element-plus/icons': 0.0.11
+  '@element-plus/icons-vue': 2.0.10_vue@3.2.47
   '@types/path-browserify': 1.0.0
   element-plus: 2.2.32_vue@3.2.47
   normalize.css: 8.0.1
@@ -281,6 +285,11 @@ packages:
       vue: ^3.2.0
     dependencies:
       vue: 3.2.47
+    dev: false
+
+  /@element-plus/icons/0.0.11:
+    resolution: {integrity: sha512-iKQXSxXu131Ai+I9Ymtcof9WId7kaXvB1+WRfAfpQCW7UiAMYgdNDqb/u0hgTo2Yq3MwC4MWJnNuTBEpG8r7+A==}
+    deprecated: Please use @element-plus/icons-vue instead.
     dev: false
 
   /@esbuild/android-arm/0.16.17:

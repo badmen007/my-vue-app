@@ -48,6 +48,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
     children: [
       {
         path: 'menu',
+        name: 'Menu Management',
         component: () => import('@/views/system/menu.vue'),
         meta: {
           title: 'Menu Management',
@@ -56,6 +57,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
       },
       {
         path: 'role',
+        name: 'Role Management',
         component: () => import('@/views/system/role.vue'),
         meta: {
           title: 'Role Management',
@@ -64,6 +66,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
       },
       {
         path: 'user',
+        name: 'User Management',
         component: () => import('@/views/system/user.vue'),
         meta: {
           title: 'User Management',

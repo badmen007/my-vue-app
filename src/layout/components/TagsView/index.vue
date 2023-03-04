@@ -1,46 +1,45 @@
 <template>
   <div class="tags-view-container">
-    <div class="tags-view-wrapper">
-      <!-- 一个个tag view就是router-link -->
-      <router-link
-        class="tags-view-item"
-        :class="{ active: isActive(tag) }"
-        v-for="(tag, index) in visitedViews"
-        :key="index"
-        :to="{ path: tag.path, query: tag.query }"
-      >
-        <span>{{ tag.meta.title }}</span>
-        <el-icon class="icon-close" v-if="!isAffix(tag)">
-          <CloseBold @click.prevent.stop="closeSelectedTag(tag)" />
-        </el-icon>
-      </router-link>
-    </div>
+    <scroll-panel>
+      <div class="tags-view-wrapper">
+        <!-- 一个个tag view就是router-link -->
+        <router-link
+          class="tags-view-item"
+          :class="{ active: isActive(tag) }"
+          v-for="(tag, index) in visitedViews"
+          :key="index"
+          :to="{ path: tag.path, query: tag.query }"
+        >
+          <span>{{ tag.meta.title }}</span>
+          <el-icon class="icon-close" v-if="!isAffix(tag)">
+            <CloseBold @click.prevent.stop="closeSelectedTag(tag)" />
+          </el-icon>
+        </router-link>
+      </div>
+    </scroll-panel>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useTagsView } from '@/stores/tagsView'
-import { storeToRefs } from 'pinia';
-import { RouteLocationNormalized, RouteLocationNormalizedLoaded, RouteRecordRaw, useRoute, useRouter } from 'vue-router';
-import { CloseBold } from '@element-plus/icons'
-import { onMounted, watch } from 'vue';
-import { routes } from '@/router'
-import path from 'path-browserify'
+import { useTagsView } from "@/stores/tagsView"
+import { storeToRefs } from "pinia"
+import { RouteLocationNormalized, RouteRecordRaw, useRoute, useRouter } from "vue-router"
+import { CloseBold } from "@element-plus/icons-vue"
+import path from "path-browserify"
+import { routes } from "@/router"
+import { onMounted, watch } from "vue"
+const store = useTagsView()
 
-const store = useTagsView();
-const { visitedViews } = storeToRefs(store);
-
+const { visitedViews } = storeToRefs(store)
 const route = useRoute()
-// 从store里获取 可显示tags view
+// 从store里获取 可显示的tags view
 // 添加tag
-
 const addTags = () => {
   const { name } = route
   if (name) {
     store.addView(route)
   }
 }
-
 watch(
   () => route.path,
   () => {
@@ -48,16 +47,14 @@ watch(
   },
   { immediate: true }
 )
-
 // 是否是当前应该激活的tag
-const isActive = (tag: RouteLocationNormalizedLoaded) => {
+const isActive = (tag: RouteLocationNormalized) => {
   return tag.path === route.path
 }
-
 // 关闭当前右键的tag路由
-const closeSelectedTag = (view: RouteLocationNormalizedLoaded) => {
+const closeSelectedTag = (view: RouteLocationNormalized) => {
   store.delView(view)
-  // 如果移除的view是当前选中的状态view, 就让删除后的集合中最后一个tag view为选中的状态
+  // 如果移除的view是当前选中状态view, 就让删除后的集合中最后一个tag view为选中态
   if (isActive(view)) {
     toLastView(visitedViews.value, view)
   }
@@ -67,27 +64,26 @@ const toLastView = (
   visitedViews: RouteLocationNormalized[],
   view: RouteLocationNormalized
 ) => {
-  // 得到集合中的最有一个项 tag view可能没有
+  // 得到集合中最后一个项tag view 可能没有
   const lastView = visitedViews[visitedViews.length - 1]
   if (lastView) {
     router.push(lastView.path)
   } else {
-    // 如果集合中没有tag view
-    // 如果刚刚删除的正式Dashboard 就重定向到Dashboard(首页)
-    if (view.name === 'Dashboard') {
-      router.push({ path: view.path})
+    // 集合中都没有tag view时
+    // 如果刚刚删除的正是Dashboard 就重定向回Dashboard（首页）
+    if (view.name === "Dashboard") {
+      router.push({ path: view.path })
     } else {
-      // tag都没有了 删除的也不是Dashboard 只能跳转到首页
-      router.push('/')
+      // tag都没有了 删除的也不是Dashboard 只能跳转首页
+      router.push("/")
     }
   }
 }
-
-const filterAffixTags = (routes: RouteRecordRaw[], basePath = '/') => {
+const filterAffixTags = (routes: RouteRecordRaw[], basePath = "/") => {
   let tags: RouteLocationNormalized[] = []
-  routes.forEach(route => {
-    if(route.meta && route.meta.affix) {
-      // 把路径解析成完整的路径，路径可能是相对路径
+  routes.forEach((route) => {
+    if (route.meta && route.meta.affix) {
+      // 把路由路径解析成完整路径，路由可能是相对路径
       const tagPath = path.resolve(basePath, route.path)
       tags.push({
         name: route.name,
@@ -95,28 +91,28 @@ const filterAffixTags = (routes: RouteRecordRaw[], basePath = '/') => {
         meta: { ...route.meta }
       } as RouteLocationNormalized)
     }
-    // 深度优先遍历 子路由 (子路由路径可能相对于route.path父路由路径)
-    if(route.children) {
+
+    // 深度优先遍历 子路由（子路由路径可能相对于route.path父路由路径）
+    if (route.children) {
       const childTags = filterAffixTags(route.children, route.path)
-      if(childTags.length) {
+      if (childTags.length) {
         tags = [...tags, ...childTags]
       }
     }
   })
   return tags
 }
-
 const initTags = () => {
   const affixTags = filterAffixTags(routes)
   for (const tag of affixTags) {
-    store.addView(tag)
+    if (tag.name) {
+      store.addView(tag)
+    }
   }
 }
-
-const isAffix = (tag: RouteLocationNormalizedLoaded) => {
+const isAffix = (tag: RouteLocationNormalized) => {
   return tag.meta && tag.meta.affix
 }
-
 onMounted(() => {
   initTags()
 })
@@ -129,6 +125,8 @@ onMounted(() => {
   background: #fff;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;

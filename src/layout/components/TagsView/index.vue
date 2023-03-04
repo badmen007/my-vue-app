@@ -4,14 +4,14 @@
       <!-- 一个个tag view就是router-link -->
       <router-link
         class="tags-view-item"
-        :class="{active: isActive(tag)}"
+        :class="{ active: isActive(tag) }"
         v-for="(tag, index) in visitedViews"
         :key="index"
-        :to="{path: tag.path, query: tag.query}"
+        :to="{ path: tag.path, query: tag.query }"
       >
         <span>{{ tag.meta.title }}</span>
-        <el-icon class="icon-close">
-          <CloseBold @click.prevent.stop="closeSelectedTag(tag)"/>
+        <el-icon class="icon-close" v-if="!isAffix(tag)">
+          <CloseBold @click.prevent.stop="closeSelectedTag(tag)" />
         </el-icon>
       </router-link>
     </div>
@@ -21,8 +21,11 @@
 <script lang="ts" setup>
 import { useTagsView } from '@/stores/tagsView'
 import { storeToRefs } from 'pinia';
-import { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router';
+import { RouteLocationNormalized, RouteLocationNormalizedLoaded, RouteRecordRaw, useRoute, useRouter } from 'vue-router';
 import { CloseBold } from '@element-plus/icons'
+import { onMounted, watch } from 'vue';
+import { routes } from '@/router'
+import path from 'path-browserify'
 
 const store = useTagsView();
 const { visitedViews } = storeToRefs(store);
@@ -80,6 +83,43 @@ const toLastView = (
   }
 }
 
+const filterAffixTags = (routes: RouteRecordRaw[], basePath = '/') => {
+  let tags: RouteLocationNormalized[] = []
+  routes.forEach(route => {
+    if(route.meta && route.meta.affix) {
+      // 把路径解析成完整的路径，路径可能是相对路径
+      const tagPath = path.resolve(basePath, route.path)
+      tags.push({
+        name: route.name,
+        path: tagPath,
+        meta: { ...route.meta }
+      } as RouteLocationNormalized)
+    }
+    // 深度优先遍历 子路由 (子路由路径可能相对于route.path父路由路径)
+    if(route.children) {
+      const childTags = filterAffixTags(route.children, route.path)
+      if(childTags.length) {
+        tags = [...tags, ...childTags]
+      }
+    }
+  })
+  return tags
+}
+
+const initTags = () => {
+  const affixTags = filterAffixTags(routes)
+  for (const tag of affixTags) {
+    store.addView(tag)
+  }
+}
+
+const isAffix = (tag: RouteLocationNormalizedLoaded) => {
+  return tag.meta && tag.meta.affix
+}
+
+onMounted(() => {
+  initTags()
+})
 </script>
 
 <style lang="scss" scoped>
@@ -88,8 +128,7 @@ const toLastView = (
   height: 34px;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0,
-0.04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
@@ -149,8 +188,6 @@ const toLastView = (
       background-color: #b4bccc;
       color: #fff;
     }
-
   }
 }
-
 </style>

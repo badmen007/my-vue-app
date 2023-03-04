@@ -98,7 +98,7 @@ const constantRoutes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: 'Dashboard', icon: 'dashboard' }
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
   }

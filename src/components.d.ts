@@ -35,6 +35,6 @@ declare module '@vue/runtime-core' {
     SidebarItemLink: typeof import('./layout/components/Sidebar/SidebarItemLink.vue')['default']
     SizeSelect: typeof import('./components/SizeSelect/index.vue')['default']
     SvgIcon: typeof import('./components/SvgIcon/index.vue')['default']
-    TagsView: typeof import('./components/TagsView/index.vue')['default']
+    TagsView: typeof import('./layout/components/TagsView/index.vue')['default']
   }
 }

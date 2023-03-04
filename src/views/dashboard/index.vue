@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 // import { getCurrentInstance } from 'vue'
+defineOptions({ name: 'Dashboard' })
 const { proxy } = getCurrentInstance()!
 const sayHi = () => {
   proxy?.$message.success('Hi')

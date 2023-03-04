@@ -35,5 +35,8 @@ module.exports = {
         endOfLine: 'auto' // 换行符
       }
     ]
+  },
+  globals: {
+    defineOptions: 'readonly',
   }
 }

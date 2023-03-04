@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { RouteLocationNormalizedLoaded } from 'vue-router'
+import { RouteLocationNormalizedLoaded, RouteRecordName } from 'vue-router'
 
 export const useTagsView = defineStore('tag', () => {
   const visitedViews = ref<RouteLocationNormalizedLoaded[]>([])
@@ -13,6 +13,7 @@ export const useTagsView = defineStore('tag', () => {
         title: view.meta?.title || 'tag-name'
       })
     )
+    addCachedView(view)
   }
 
   // 删除视图
@@ -23,5 +24,18 @@ export const useTagsView = defineStore('tag', () => {
     }
   }
 
-  return { visitedViews, addView, delView }
+  const cachedViews = ref<RouteRecordName[]>([])
+  const addCachedView = (view: RouteLocationNormalizedLoaded) => {
+    if(cachedViews.value.includes(view.name!)) return
+    if(!view.meta?.noCache) {
+      cachedViews.value.push(view.name!)
+    }
+  }
+
+  const delCachedView = (view: RouteLocationNormalizedLoaded) => {
+    const index = cachedViews.value.indexOf(view.name!)
+    index > -1 && cachedViews.value.splice(index, 1)
+  }
+
+  return { visitedViews, addView, delView, cachedViews, addCachedView, delCachedView }
 })

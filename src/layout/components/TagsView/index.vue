@@ -10,7 +10,29 @@
           :key="index"
           :to="{ path: tag.path, query: tag.query }"
         >
-          <span>{{ tag.meta.title }}</span>
+          <el-dropdown
+            trigger="contextmenu"
+            @command="(command:any) => handleTagCommand(command, tag)"
+          >
+            <span>{{ tag.meta.title }}</span>
+            <span
+              v-if="!isAffix(tag)"
+              class="el-icon-close"
+              @click.prevent.stop="closeSelectedTag(tag)"
+            ></span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="all">关闭所有</el-dropdown-item>
+                <el-dropdown-item command="other">关闭其他</el-dropdown-item>
+                <el-dropdown-item
+                  command="self"
+                  v-if="!tag.meta || !tag.meta.affix"
+                  >关闭</el-dropdown-item
+                >
+                <el-dropdown-item command="refresh">刷新</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
           <el-icon class="icon-close" v-if="!isAffix(tag)">
             <CloseBold @click.prevent.stop="closeSelectedTag(tag)" />
           </el-icon>
@@ -21,13 +43,18 @@
 </template>
 
 <script lang="ts" setup>
-import { useTagsView } from "@/stores/tagsView"
-import { storeToRefs } from "pinia"
-import { RouteLocationNormalized, RouteRecordRaw, useRoute, useRouter } from "vue-router"
-import { CloseBold } from "@element-plus/icons-vue"
-import path from "path-browserify"
-import { routes } from "@/router"
-import { onMounted, watch } from "vue"
+import { useTagsView } from '@/stores/tagsView'
+import { storeToRefs } from 'pinia'
+import {
+  RouteLocationNormalized,
+  RouteRecordRaw,
+  useRoute,
+  useRouter
+} from 'vue-router'
+import { CloseBold } from '@element-plus/icons-vue'
+import path from 'path-browserify'
+import { routes } from '@/router'
+import { onMounted, watch } from 'vue'
 const store = useTagsView()
 
 const { visitedViews } = storeToRefs(store)
@@ -71,15 +98,15 @@ const toLastView = (
   } else {
     // 集合中都没有tag view时
     // 如果刚刚删除的正是Dashboard 就重定向回Dashboard（首页）
-    if (view.name === "Dashboard") {
+    if (view.name === 'Dashboard') {
       router.push({ path: view.path })
     } else {
       // tag都没有了 删除的也不是Dashboard 只能跳转首页
-      router.push("/")
+      router.push('/')
     }
   }
 }
-const filterAffixTags = (routes: RouteRecordRaw[], basePath = "/") => {
+const filterAffixTags = (routes: RouteRecordRaw[], basePath = '/') => {
   let tags: RouteLocationNormalized[] = []
   routes.forEach((route) => {
     if (route.meta && route.meta.affix) {
@@ -116,6 +143,55 @@ const isAffix = (tag: RouteLocationNormalized) => {
 onMounted(() => {
   initTags()
 })
+
+const enum TagCommandType {
+  All = 'all',
+  Other = 'other',
+  Self = 'self',
+  Refresh = 'refresh'
+}
+
+const handleTagCommand = (
+  command: TagCommandType,
+  view: RouteLocationNormalized
+) => {
+  switch (command) {
+    case TagCommandType.All:
+      handleCloseAllTag(view)
+      break
+    case TagCommandType.Other:
+      handleCloseOtherTag(view)
+      break
+    case TagCommandType.Self:
+      closeSelectedTag(view)
+      break
+    case TagCommandType.Refresh:
+      refreshSelectedTag(view)
+      break
+  }
+}
+
+const handleCloseAllTag = (view: RouteLocationNormalized) => {
+  store.delAllView()
+  // 如果移除的view是当前选中状态view, 就让删除后的集合中最后一个tag view为选中态
+  toLastView(visitedViews.value, view)
+}
+
+const handleCloseOtherTag = (view: RouteLocationNormalized) => {
+  store.delOthersView(view)
+  // 如果移除的view是当前选中状态view, 就让删除后的集合中最后一个tag view为选中态
+  if (!isActive(view)) {
+    // 删除其他tag后，让该view路由激活
+    router.push(view.path)
+  }
+}
+
+const refreshSelectedTag = (view: RouteLocationNormalized) => {
+  // 刷新前  将该路由名称从缓存列表中移除
+  store.delCachedView(view)
+
+  router.push('/redirect' + view.path)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -151,6 +227,9 @@ onMounted(() => {
         background: #42b983;
         color: #fff;
         border-color: #42b983;
+        .el-dropdown {
+          color: #fff;
+        }
         &::before {
           position: relative;
           display: inline-block;

@@ -109,6 +109,33 @@ const constantRoutes: Array<RouteRecordRaw> = [
         }
       }
     ]
+  },
+  {
+    path: '/redirect',
+    component: Layout,
+    meta: {
+      hidden: true
+    },
+    children: [
+      {
+        path: '/redirect/:path(.*)', // 要匹配多个路由
+        component: () => import('@/views/redirect/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/:pathMatch(.*)*', // 要匹配多个路由
+    redirect: '/404',
+    meta: {
+      hidden: true
+    }
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404.vue'),
+    meta: {
+      hidden: true
+    }
   }
 ]
 

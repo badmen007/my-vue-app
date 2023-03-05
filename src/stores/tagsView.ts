@@ -26,8 +26,8 @@ export const useTagsView = defineStore('tag', () => {
 
   const cachedViews = ref<RouteRecordName[]>([])
   const addCachedView = (view: RouteLocationNormalizedLoaded) => {
-    if(cachedViews.value.includes(view.name!)) return
-    if(!view.meta?.noCache) {
+    if (cachedViews.value.includes(view.name!)) return
+    if (!view.meta?.noCache) {
       cachedViews.value.push(view.name!)
     }
   }
@@ -37,5 +37,26 @@ export const useTagsView = defineStore('tag', () => {
     index > -1 && cachedViews.value.splice(index, 1)
   }
 
-  return { visitedViews, addView, delView, cachedViews, addCachedView, delCachedView }
+  const delAllView = () => {
+    visitedViews.value = visitedViews.value.filter((tag) => tag.meta?.affix)
+    cachedViews.value = []
+  }
+
+  const delOthersView = (view: RouteLocationNormalizedLoaded) => {
+    visitedViews.value = visitedViews.value.filter(
+      (tag) => tag.meta?.affix || tag.path === view.path
+    )
+    cachedViews.value = cachedViews.value.filter((name) => name === view.name)
+  }
+
+  return {
+    visitedViews,
+    addView,
+    delView,
+    cachedViews,
+    addCachedView,
+    delCachedView,
+    delAllView,
+    delOthersView
+  }
 })

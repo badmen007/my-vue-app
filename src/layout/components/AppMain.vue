@@ -11,17 +11,17 @@
 </template>
 
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import { useTagsView } from '@/stores/tagsView'
-import { toRefs } from 'pinia'
 const route = useRoute()
 const store = useTagsView()
-const { cacheViews } = toRefs(store)
-const includes = () => computed(() => cacheViews.value as string[])
+const { cachedViews } = storeToRefs(store)
+const includes = computed(() => cachedViews.value as string[])
 
 </script>
 
 <style lang="scss" scoped>
-.app-main { 
+.app-main {
   /* navbar 50px */
   min-height: calc(100vh - 50px);
 }

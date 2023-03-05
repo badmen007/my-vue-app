@@ -6,7 +6,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import { DefineOptions } from 'unplugin-vue-define' 
+import DefineOptions  from 'unplugin-vue-define-options/vite' 
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -35,7 +35,7 @@ export default defineConfig({
     Components({
       dirs: ['src/components', 'src/layout/components'],
       dts: 'src/components.d.ts',
-      resolvers: [ElementPlusResolver()]  // 生成的组件类型放到这里来
+      resolvers: [ElementPlusResolver()] // 生成的组件类型放到这里来
     })
   ]
 })

@@ -3,6 +3,13 @@
     <hambuger @toggleClick="toggleSidebar" :is-active="sidebar.opened" />
     <breadcrumb></breadcrumb>
     <div class="right-menu">
+      <!-- 设置 -->
+      <div
+        @click="openShowSetting"
+        class="setting right-menu-item hover-effect"
+      >
+        <el-icon><Setting /></el-icon>
+      </div>
       <screenfull class="right-menu-item hover-effect"></screenfull>
 
       <!-- element组件size切换 -->
@@ -17,6 +24,13 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/app";
 import { storeToRefs } from "pinia";
+import { Setting } from '@element-plus/icons-vue'
+
+const emit = defineEmits<{ (event: "showSetting", isShow: boolean): void}>()
+// 打开设置面板 触发对应的事件
+const openShowSetting = () => {
+  emit("showSetting", true)
+}
 
 const store = useAppStore()
 const { sidebar } = storeToRefs(store)
@@ -49,6 +63,11 @@ const toggleSidebar = () => {
           background: rgba(0, 0, 0, 0.025)
         }
       }
+    }
+    .setting {
+      font-size: 26px;
+      display: flex;
+      align-items: center;
     }
   }
 }

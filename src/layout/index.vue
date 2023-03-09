@@ -5,7 +5,7 @@
     </div>
     <div class="main-container">
       <div class="header">
-        <navbar></navbar>
+        <navbar @showSetting="openSetting"></navbar>
         <tags-view></tags-view>
       </div>
       <!-- <div class="app-main">
@@ -14,8 +14,28 @@
       </div> -->
       <app-main></app-main>
     </div>
+    <right-panel
+      v-model="showSetting"
+      title="样式风格设置"
+      :size="settingPanelWith"
+    >
+      <settings />
+    </right-panel>
   </div>
 </template>
+
+<script setup lang="ts">
+import variables from '@/styles/variables.module.scss'
+
+const showSetting = ref(false)
+
+const openSetting = () => {
+  // 控制right-panel弹出
+  showSetting.value = true
+}
+
+const settingPanelWith = computed(() => variables.settingPanelWidth)
+</script>
 
 <style lang="scss" scoped>
 .app-wrapper {

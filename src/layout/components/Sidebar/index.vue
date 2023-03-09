@@ -5,9 +5,9 @@
     :default-active="activeMenu"
     :background-color="scssVariables.menuBg"
     :text-color="scssVariables.menuText"
-    :active-text-color="scssVariables.menuActiveText"
     :collapse="sidebar.opened"
     :collapse-transition="true"
+    :active-text-color="themeColor"
   >
     <sidebar-item
       v-for="route in menuRoutes"
@@ -22,6 +22,7 @@ import scssVariables from '@/styles/variables.module.scss'
 import { routes } from '@/router'
 import { useAppStore } from "@/stores/app";
 import { storeToRefs } from "pinia";
+import { useSettingStore } from '@/stores/settings';
 
 const store = useAppStore()
 const { sidebar } = storeToRefs(store)
@@ -37,4 +38,7 @@ const activeMenu = computed(() => {
 })
 
 const menuRoutes = computed(() => routes)
+
+const settingStore = useSettingStore()
+const themeColor = computed(() => settingStore.settings.theme)
 </script>

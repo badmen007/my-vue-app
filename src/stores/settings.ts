@@ -3,7 +3,12 @@ import { defineStore } from 'pinia'
 
 export const useSettingStore = defineStore('settings', () => {
   // theme是用户选择的主题
-  const settings = reactive({ theme: variables.theme, originalTheme: '', tagsView: true })
+  const settings = reactive({
+    theme: variables.theme,
+    originalTheme: '',
+    tagsView: true,
+    sidebarLogo: true
+  })
 
   type ISettings = typeof settings
   type ValueOf<T> = T[keyof T]
@@ -17,7 +22,7 @@ export const useSettingStore = defineStore('settings', () => {
     value: ValueOf<ISettings>
   }) => {
     if (key in settings) {
-      (settings[key] as ValueOf<ISettings>) = value
+      ;(settings[key] as ValueOf<ISettings>) = value
     }
   }
   return { settings, changeSetting }

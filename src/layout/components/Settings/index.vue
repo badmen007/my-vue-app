@@ -8,12 +8,29 @@
       <span>Open Tags-View</span>
       <el-switch v-model="tagsView" class="drawer-switch"/>
     </div>
+    <!-- 侧边栏logo -->
+    <div>
+      <span>Sidebar Logo</span>
+      <el-switch v-model="showSidebarLogo" class="drawer-switch"/>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useSettingStore } from '@/stores/settings';
 const settingsStore = useSettingStore()
+
+const showSidebarLogo = computed({
+  get() {
+    return settingsStore.settings.sidebarLogo
+  },
+  set(val) {
+    settingsStore.changeSetting({
+      key: 'sidebarLogo',
+      value: val
+    })
+  }
+})
 
 const tagsView = computed({
   get() {

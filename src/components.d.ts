@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Hambuger: typeof import('./layout/components/Hambuger/index.vue')['default']
+    Logo: typeof import('./layout/components/Settings/Logo.vue')['default']
     Navbar: typeof import('./layout/components/Navbar.vue')['default']
     RightPanel: typeof import('./components/RightPanel/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

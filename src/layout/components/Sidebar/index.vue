@@ -1,4 +1,5 @@
 <template>
+  <Logo v-if="showLogo" :collapse="isCollapse"/>
   <el-menu
     class="sidebar-container-menu"
     mode="vertical"
@@ -41,4 +42,9 @@ const menuRoutes = computed(() => routes)
 
 const settingStore = useSettingStore()
 const themeColor = computed(() => settingStore.settings.theme)
+
+// 是否显示logo
+const showLogo = computed(() => settingStore.settings.sidebarLogo)
+// 展开收起状态 稍后放store 当前是展开就让他收起
+const isCollapse = computed(() => sidebar.value.opened)
 </script>

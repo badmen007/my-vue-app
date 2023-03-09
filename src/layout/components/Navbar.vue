@@ -14,7 +14,7 @@
 
       <!-- element组件size切换 -->
       <el-tooltip content="Global Size" effect="dark">
-        <size-select class="right-menu-item hover-effect"/>
+        <size-select class="right-menu-item hover-effect" />
       </el-tooltip>
       <avatar />
     </div>
@@ -22,14 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from "@/stores/app";
-import { storeToRefs } from "pinia";
+import { useAppStore } from '@/stores/app'
+import { storeToRefs } from 'pinia'
 import { Setting } from '@element-plus/icons-vue'
 
-const emit = defineEmits<{ (event: "showSetting", isShow: boolean): void}>()
+const emit = defineEmits<{ (event: 'showSetting', isShow: boolean): void }>()
 // 打开设置面板 触发对应的事件
 const openShowSetting = () => {
-  emit("showSetting", true)
+  emit('showSetting', true)
 }
 
 const store = useAppStore()
@@ -60,7 +60,7 @@ const toggleSidebar = () => {
         cursor: pointer;
         transition: background 0.3s;
         &:hover {
-          background: rgba(0, 0, 0, 0.025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }

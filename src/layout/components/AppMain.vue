@@ -17,7 +17,6 @@ const route = useRoute()
 const store = useTagsView()
 const { cachedViews } = storeToRefs(store)
 const includes = computed(() => cachedViews.value as string[])
-
 </script>
 
 <style lang="scss" scoped>

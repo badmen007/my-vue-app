@@ -6,7 +6,7 @@
     <div class="main-container">
       <div class="header">
         <navbar @showSetting="openSetting"></navbar>
-        <tags-view></tags-view>
+        <tags-view v-if="showTagsView"></tags-view>
       </div>
       <!-- <div class="app-main">
         <h2>app main</h2>
@@ -26,8 +26,12 @@
 
 <script setup lang="ts">
 import variables from '@/styles/variables.module.scss'
-
+import { useSettingStore } from '@/stores/settings'
+const settingsStore = useSettingStore()
 const showSetting = ref(false)
+
+const showTagsView = computed(() => settingsStore.settings.tagsView)
+const otherHeight = computed(() => (showSetting.value ? 84 : 50) + 'px')
 
 const openSetting = () => {
   // 控制right-panel弹出
@@ -59,7 +63,7 @@ const settingPanelWith = computed(() => variables.settingPanelWidth)
     }
     .app-main {
       /* main = 100% - navbar + tagsview */
-      min-height: calc(100vh - 84px);
+      min-height: calc(100vh - v-bind(otherHeight));
       background: red;
     }
   }

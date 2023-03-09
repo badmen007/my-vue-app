@@ -4,8 +4,29 @@
       <span>主题色</span>
       <theme-picker />
     </div>
+    <div>
+      <span>Open Tags-View</span>
+      <el-switch v-model="tagsView" class="drawer-switch"/>
+    </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useSettingStore } from '@/stores/settings';
+const settingsStore = useSettingStore()
+
+const tagsView = computed({
+  get() {
+    return settingsStore.settings.tagsView
+  },
+  set(val) {
+    settingsStore.changeSetting({
+      key: 'tagsView',
+      value: val
+    })
+  }
+})
+</script>
 
 <style lang="scss" scoped>
 .drawer-container {

@@ -1,12 +1,23 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form
+      class="login-form"
+      :model="loginForm"
+      :rules="loginRules"
+      ref="loginFormRef"
+    >
       <div class="admin-logo">
         <img class="logo" src="../../assets/vue.svg" alt="logo" />
         <h1 class="name">Vue3 Admin</h1>
       </div>
-      <el-form-item prop="username">
-        <el-input placeholder="请输入你的用户名">
+      <el-form-item prop="username" v-model="loginForm.username">
+        <el-input
+          placeholder="请输入你的用户名"
+          ref="usernameRef"
+          autocomplete="off"
+          tabindex="1"
+          v-model="loginForm.username"
+        >
           <template #prepend>
             <span class="svg-container">
               <svg-icon icon-class="user"></svg-icon>
@@ -16,7 +27,13 @@
       </el-form-item>
 
       <el-form-item prop="password">
-        <el-input placeholder="请输入密码">
+        <el-input
+          placeholder="请输入密码"
+          v-model="loginForm.password"
+          show-password
+          autocomplete="off"
+          tabindex="2"
+        >
           <template #prepend>
             <span class="svg-container">
               <svg-icon icon-class="password"></svg-icon>
@@ -38,10 +55,59 @@
 </template>
 
 <script lang="ts" setup>
+import { FormInstance } from 'element-plus';
+
 const loading = ref(false)
+
+// form ref
+const loginFormRef = ref<FormInstance | null>(null)
+// form username ref
+const usernameRef = ref<HTMLInputElement | null>(null)
+// form password ref
+const passwordRef = ref<HTMLInputElement | null>(null)
+// 登录所需要的信息
+const loginState = reactive({
+  loginForm: {
+    username: '',
+    password: ''
+  },
+  loginRules: {
+    username: [
+      {
+        required: true,
+        trigger: 'blur',
+        message: '请输入用户名'
+      }
+    ],
+    password: [
+      {
+        required: true,
+        trigger: 'blur',
+        message: '请输入密码'
+      }
+    ]
+  }
+})
+// 处理登录逻辑
 const handleLogin = () => {
-  console.log('login')
+  loginFormRef.value?.validate((valid) => {
+    if (valid) {
+      console.log(loginState.loginForm);
+    }
+  })
 }
+// 解构
+const { loginForm, loginRules } = toRefs(loginState)
+
+// 自动获取焦点
+onMounted(() => {
+  if (loginState.loginForm.username === '') {
+    usernameRef.value?.focus()
+  } else if (loginState.loginForm.password === ''){
+    passwordRef.value?.focus()
+  }
+})
+
 </script>
 
 <style lang="scss">

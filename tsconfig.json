@@ -18,7 +18,8 @@
     },
     "types": [
       "element-plus/global", // 正定全局组件的类型
-      "unplugin-vue-define-options/macros-global"
+      "unplugin-vue-define-options/macros-global",
+      "vite/client"
     ]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

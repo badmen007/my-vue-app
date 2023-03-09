@@ -37,5 +37,15 @@ export default defineConfig({
       dts: 'src/components.d.ts',
       resolvers: [ElementPlusResolver()] // 生成的组件类型放到这里来
     })
-  ]
+  ], 
+  server: {
+    proxy: {
+      "dev-api": {
+        target: 'http://localhost:3000',
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/dev-api/, '')
+      }
+    }
+  }
 })

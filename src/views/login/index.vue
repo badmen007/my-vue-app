@@ -55,6 +55,8 @@
 </template>
 
 <script lang="ts" setup>
+import router from '@/router';
+import { useUserStore } from '@/stores/user';
 import { FormInstance } from 'element-plus';
 
 const loading = ref(false)
@@ -88,11 +90,21 @@ const loginState = reactive({
     ]
   }
 })
+const userStore = useUserStore()
+const router = useRouter()
 // 处理登录逻辑
 const handleLogin = () => {
-  loginFormRef.value?.validate((valid) => {
+  loginFormRef.value?.validate(async (valid) => {
     if (valid) {
-      console.log(loginState.loginForm);
+      loading.value = true;
+      try {
+        await userStore.login(loginState.loginForm)
+        router.push('/')
+      } finally {
+        loading.value = false
+      }
+    } else {
+      console.log('error submit!!')
     }
   })
 }

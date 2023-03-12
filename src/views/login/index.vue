@@ -91,6 +91,7 @@ const loginState = reactive({
     ]
   }
 })
+const { proxy } = getCurrentInstance()!
 const userStore = useUserStore()
 const router = useRouter()
 // 处理登录逻辑
@@ -100,6 +101,7 @@ const handleLogin = () => {
       loading.value = true
       try {
         await userStore.login(loginState.loginForm)
+        proxy?.$message.success('登录成功')
         router.push({
           path: redirect.value || '/',
           query: otherQuery.value

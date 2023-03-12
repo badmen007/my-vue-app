@@ -1,32 +1,29 @@
-import router from '@/router';
-import noProgress from 'nprogress';
-import 'nprogress/nprogress.css';
-import { getToken } from '@/utils/auth';
-
-noProgress.configure({ showSpinner: false });
-
-const whiteList = ['/login'];
-
+import router from "@/router";
+import nProgress from "nprogress";
+import "nprogress/nprogress.css"; // progress bar style
+import { getToken } from "./utils/auth";
+nProgress.configure({ showSpinner: false });
+const whiteList = ["/login"]; // 白名单
 router.beforeEach((to) => {
-  noProgress.start();
-  const hasToken = getToken();
+  nProgress.start()
+  const hasToken = getToken()
   if (hasToken) {
-    // 如果有token代表已经登录
+    // 有token代表已登录
     if (to.path === '/login') {
-      noProgress.done();
+      nProgress.done()
       return {
         path: '/',
         replace: true
       }
     }
-    noProgress.done();
-    return true;
+    nProgress.done()
+    return true
   } else {
     if (whiteList.includes(to.path)) {
-      noProgress.done();
-      return true;  
+      nProgress.done()
+      return true
     }
-    noProgress.done();
+    nProgress.done()
     return {
       path: '/login',
       query: {
@@ -36,7 +33,6 @@ router.beforeEach((to) => {
     }
   }
 })
-
 router.afterEach(() => {
-  noProgress.done();
+  nProgress.done()
 })

@@ -7,7 +7,7 @@
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import { useAppStore } from './stores/app';
 import { storeToRefs } from 'pinia';
-import { useGenerateTheme } from '@/hooks/useGenerateTheme'
+import { useGenerateTheme } from '@/hook/useGenerateTheme'
 
 const store = useAppStore()
 const { size } = storeToRefs(store)

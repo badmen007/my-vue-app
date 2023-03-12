@@ -1,4 +1,5 @@
-import { setToken } from './../utils/auth'
+import { useTagsView } from './tagsView'
+import { removeToken, setToken } from './../utils/auth'
 import { defineStore } from 'pinia'
 import { login as loginApi } from '@/api/user'
 
@@ -23,5 +24,15 @@ export const useUserStore = defineStore('user', () => {
       return Promise.reject(e)
     }
   }
-  return { state, login }
+  const { delAllView } = useTagsView()
+  const logout = () => {
+    // 清空store中的store
+    state.token = ''
+    // 清空localStorage中的token
+    removeToken()
+    // 清除所有的tagsView
+    delAllView()
+  }
+
+  return { state, login, logout }
 })

@@ -34,5 +34,11 @@ export const useUserStore = defineStore('user', () => {
     delAllView()
   }
 
-  return { state, login, logout }
+  const resetToken = () => {
+    // 清空store中的token 
+    state.token = ''
+    removeToken
+  }
+
+  return { state, login, logout, resetToken }
 })

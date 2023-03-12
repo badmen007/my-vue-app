@@ -57,6 +57,8 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user'
 import { FormInstance } from 'element-plus'
+import useRouteQuery from '@/hook/useRouteQuery'
+const { redirect, otherQuery } = useRouteQuery()
 
 const loading = ref(false)
 
@@ -98,7 +100,10 @@ const handleLogin = () => {
       loading.value = true
       try {
         await userStore.login(loginState.loginForm)
-        router.push('/')
+        router.push({
+          path: redirect.value || '/',
+          query: otherQuery.value
+        })
       } finally {
         loading.value = false
       }

@@ -4,6 +4,7 @@ specifiers:
   '@element-plus/icons': ^0.0.11
   '@element-plus/icons-vue': ^2.0.10
   '@types/node': ^18.14.1
+  '@types/nprogress': ^0.2.0
   '@types/path-browserify': ^1.0.0
   '@typescript-eslint/eslint-plugin': ^5.53.0
   '@typescript-eslint/parser': ^5.53.0
@@ -17,6 +18,7 @@ specifiers:
   eslint-plugin-vue: ^9.9.0
   husky: ^8.0.3
   normalize.css: ^8.0.1
+  nprogress: ^0.2.0
   path-browserify: ^1.0.1
   path-to-regexp: ^6.2.1
   pinia: ^2.0.32
@@ -42,6 +44,7 @@ dependencies:
   css-color-function: 1.3.3
   element-plus: 2.2.32_vue@3.2.47
   normalize.css: 8.0.1
+  nprogress: 0.2.0
   path-browserify: 1.0.1
   path-to-regexp: 6.2.1
   pinia: 2.0.32_vue@3.2.47
@@ -53,6 +56,7 @@ dependencies:
 
 devDependencies:
   '@types/node': 18.14.1
+  '@types/nprogress': 0.2.0
   '@typescript-eslint/eslint-plugin': 5.53.0_dbs2zxbe2aiqaiiio3svelvkai
   '@typescript-eslint/parser': 5.53.0_eslint@8.34.0
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.4+vue@3.2.47
@@ -691,6 +695,10 @@ packages:
 
   /@types/node/18.14.1:
     resolution: {integrity: sha512-QH+37Qds3E0eDlReeboBxfHbX9omAcBCXEzswCu6jySP642jiM3cYSIkU/REqwhCUqXdonHFuBfJDiAJxMNhaQ==}
+    dev: true
+
+  /@types/nprogress/0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
     dev: true
 
   /@types/path-browserify/1.0.0:
@@ -2952,6 +2960,10 @@ packages:
 
   /normalize.css/8.0.1:
     resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
+    dev: false
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: false
 
   /nth-check/2.1.1:

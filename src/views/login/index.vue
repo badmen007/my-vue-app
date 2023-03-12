@@ -55,9 +55,8 @@
 </template>
 
 <script lang="ts" setup>
-import router from '@/router';
-import { useUserStore } from '@/stores/user';
-import { FormInstance } from 'element-plus';
+import { useUserStore } from '@/stores/user'
+import { FormInstance } from 'element-plus'
 
 const loading = ref(false)
 
@@ -96,7 +95,7 @@ const router = useRouter()
 const handleLogin = () => {
   loginFormRef.value?.validate(async (valid) => {
     if (valid) {
-      loading.value = true;
+      loading.value = true
       try {
         await userStore.login(loginState.loginForm)
         router.push('/')
@@ -115,11 +114,10 @@ const { loginForm, loginRules } = toRefs(loginState)
 onMounted(() => {
   if (loginState.loginForm.username === '') {
     usernameRef.value?.focus()
-  } else if (loginState.loginForm.password === ''){
+  } else if (loginState.loginForm.password === '') {
     passwordRef.value?.focus()
   }
 })
-
 </script>
 
 <style lang="scss">

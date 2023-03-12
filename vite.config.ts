@@ -6,7 +6,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import DefineOptions  from 'unplugin-vue-define-options/vite' 
+import DefineOptions from 'unplugin-vue-define-options/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -37,14 +37,14 @@ export default defineConfig({
       dts: 'src/components.d.ts',
       resolvers: [ElementPlusResolver()] // 生成的组件类型放到这里来
     })
-  ], 
+  ],
   server: {
     proxy: {
-      "dev-api": {
+      '/dev-api': {
         target: 'http://localhost:3000',
         ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/dev-api/, '')
+        rewrite: (path) => path.replace(/^\/dev-api/, '/api')
       }
     }
   }

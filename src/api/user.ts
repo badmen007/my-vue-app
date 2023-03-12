@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from './config/request'
 import { ApiResponse } from './type'
 
 interface UserLoginData {
